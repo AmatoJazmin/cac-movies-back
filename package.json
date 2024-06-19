@@ -1,0 +1,24 @@
+{
+  "name": "cac-movies-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmatoJazmin/cac-movies-back.git"
+  },
+  "author": "Grupo-6",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AmatoJazmin/cac-movies-back/issues"
+  },
+  "homepage": "https://github.com/AmatoJazmin/cac-movies-back#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

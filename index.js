@@ -1,4 +1,5 @@
 const express = require("express")
+const moviesRoutes = require("./routes/movies.router")
 
 const server = express()
 

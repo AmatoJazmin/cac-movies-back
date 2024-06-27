@@ -1,7 +1,7 @@
 const db = require("../db/db");
 
 const getMovies = (req, res) => {
-  const sql = "SELECT * FROM peliculas";
+  const sql = "SELECT * FROM peliculas INNER JOIN categorias ON categoria.id = peliculas.id_categoria";
   db.query(sql, (error, rows) => {
     console.log(rows);
     if (error) {
@@ -36,9 +36,7 @@ const getMovieByID = (req, res) => {
 
 //POST
 const addMovie = (req, res) => {
-  // console.log(req.file);
-
-  // const { filename } = req.file;
+  
   const { titulo, estreno, descripcion, id_categorias } = req.body;
 
   const sql =
@@ -47,7 +45,6 @@ const addMovie = (req, res) => {
     // console.log(result);
     if (error) {
       // console.log(error);
-      // fs.unlinkSync(path.join(__dirname, "../public/uploads", filename));
       return res.status(500).json({ error: "Intente mas tarde" });
     }
 

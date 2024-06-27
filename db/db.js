@@ -15,4 +15,4 @@ connection.connect((err) => {
     console.log('Conexion exitosa!')
 })
 
-module.exports = connection
+module.exports = connection;

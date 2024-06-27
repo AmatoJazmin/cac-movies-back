@@ -1,12 +1,9 @@
 const db = require("../db/db");
 
-const fs = require("fs");
-const path = require("path");
-
-const index = (req, res) => {
+const getMovies = (req, res) => {
   const sql = "SELECT * FROM peliculas";
   db.query(sql, (error, rows) => {
-    // console.log(rows);
+    console.log(rows);
     if (error) {
       console.log(error);
       return res.status(500).json({ error: "Intente mas tarde" });
@@ -15,8 +12,9 @@ const index = (req, res) => {
     res.json(rows);
   });
 };
+
 //GET
-const show = (req, res) => {
+const getMovieByID = (req, res) => {
   const { id } = req.params;
 
   const sql = "SELECT * FROM peliculas WHERE id = ?";
@@ -28,7 +26,6 @@ const show = (req, res) => {
     }
 
     
-
     if (rows.length === 0) {
       return res.status(404).json({ message: "Esta película no esta disponible" });
     }
@@ -38,10 +35,10 @@ const show = (req, res) => {
 };
 
 //POST
-const store = (req, res) => {
+const addMovie = (req, res) => {
   // console.log(req.file);
 
-  const { filename } = req.file;
+  // const { filename } = req.file;
   const { titulo, estreno, descripcion, id_categorias } = req.body;
 
   const sql =
@@ -50,7 +47,7 @@ const store = (req, res) => {
     // console.log(result);
     if (error) {
       // console.log(error);
-      fs.unlinkSync(path.join(__dirname, "../public/uploads", filename));
+      // fs.unlinkSync(path.join(__dirname, "../public/uploads", filename));
       return res.status(500).json({ error: "Intente mas tarde" });
     }
 
@@ -63,7 +60,7 @@ const store = (req, res) => {
 };
 
 //PUT(reemplazo completamente un recurso existente)
-const update = (req, res) => {
+const updateMovie = (req, res) => {
   // console.log(req.file);
 
   let sql =
@@ -74,13 +71,13 @@ const update = (req, res) => {
 
   const values = [titulo, estreno, descripcion, director, id_categorias];
 
-  if (req.file) {
+ /*  if (req.file) {
     const { filename } = req.file;
     sql =
       "UPDATE peliculas SET titulo = ?, estreno = ?, descripcion = ?, director = ?, id_categoria = ? WHERE id = ?";
     values.push(filename);
   }
-
+ */
   values.push(id);
 
   db.query(sql, values, (error, result) => {
@@ -107,7 +104,7 @@ const update = (req, res) => {
 };
 
 //DELETE
-const destroy = (req, res) => {
+const deleteMovie = (req, res) => {
   const { id } = req.params;
 
   const sql = "DELETE FROM peliculas WHERE id = ?";
@@ -127,9 +124,9 @@ const destroy = (req, res) => {
 };
 
 module.exports = {
-  index,
-  show,
-  store,
-  update,
-  destroy,
+  getMovies,
+  getMovieByID,
+  addMovie,
+  updateMovie,
+  deleteMovie,
 };

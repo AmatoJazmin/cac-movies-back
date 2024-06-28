@@ -24,7 +24,6 @@ const getMovieByID = (req, res) => {
       console.log(error);
       return res.status(500).json({ error: "Intente mas tarde" });
     }
-
     
     if (rows.length === 0) {
       return res.status(404).json({ message: "Esta película no esta disponible" });
@@ -58,8 +57,7 @@ const addMovie = (req, res) => {
 
 //PUT(reemplazo completamente un recurso existente)
 const updateMovie = (req, res) => {
-  // console.log(req.file);
-
+  
   let sql =
     "UPDATE peliculas SET titulo = ?, estreno = ?, descripcion = ?, director = ?, id_categoria = ? WHERE id = ?";
 
@@ -68,30 +66,23 @@ const updateMovie = (req, res) => {
 
   const values = [titulo, estreno, descripcion, director, id_categorias];
 
- /*  if (req.file) {
-    const { filename } = req.file;
-    sql =
-      "UPDATE peliculas SET titulo = ?, estreno = ?, descripcion = ?, director = ?, id_categoria = ? WHERE id = ?";
-    values.push(filename);
-  }
- */
   values.push(id);
 
   db.query(sql, values, (error, result) => {
     // console.log(result);
     if (error) {
       console.log(error);
-      // Borra imagen subida
+     
       return res.status(500).json({ error: "Intente mas tarde" });
     }
 
     if (result.affectedRows === 0) {
-      // Borra imagen subida
+    
       return res.status(404).json({ message: "No existe el producto" });
     }
 
     if (result.affectedRows === 1) {
-      // fs.unlink a la imagen anterior
+     
     }
 
     const producto = { ...req.body, ...req.params };

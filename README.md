@@ -14,15 +14,15 @@
 
 #Crear la base de datos en local con Laragon
 
-    - Ingresar a phpMyAdmin con sus credenciales
-    - Ir a 'New' para crear una nueva base de datos
-    - Ir a 'import' y seleccionar script moviesdb.sql ubicado en la ruta '..\cac-movies-back\src'
+  - Ingresar a phpMyAdmin con sus credenciales
+  - Ir a 'New' para crear una nueva base de datos
+  - Ir a 'import' y seleccionar script moviesdb.sql ubicado en la ruta '..\cac-movies-back\src'
 
-#Verificar credenciales de la base de datos en node '..\cac-movies-back\db\db'
+#Verificar credenciales de la base de datos en el archivo db.js
 
-    user: 'root',
+  - user: '',
     
-    password: 'root',
+  - password: ''
     
 Deben ser las mismas con las que ingresa a phpMyAdmin
 
@@ -30,9 +30,9 @@ Deben ser las mismas con las que ingresa a phpMyAdmin
 
     npm run dev
 
-*Salida esperada en la terminal:*
+Salida esperada en la terminal:
 
-Servidor funcionando en http://localhost:3000
+*Servidor funcionando en http://localhost:3000*
   
-Conexion exitosa!
+*Conexion exitosa!*
     

@@ -1,7 +1,7 @@
 const db = require("../db/db");
 
 const getMovies = (req, res) => {
-  const sql = "SELECT * FROM peliculas INNER JOIN categorias ON categoria.id = peliculas.id_categoria";
+  const sql = "SELECT p.titulo, p.estreno, p.descripcion, p.director, c.nombre AS categoria FROM peliculas AS p INNER JOIN categorias AS c ON c.id = p.id_categoria";
   db.query(sql, (error, rows) => {
     console.log(rows);
     if (error) {
@@ -17,7 +17,7 @@ const getMovies = (req, res) => {
 const getMovieByID = (req, res) => {
   const { id } = req.params;
 
-  const sql = "SELECT * FROM peliculas WHERE id = ?";
+  const sql = "SELECT p.titulo, p.estreno, p.descripcion, p.director, c.nombre AS categoria FROM peliculas AS p INNER JOIN categorias AS c ON c.id = p.id_categoria WHERE p.id = ?";
   db.query(sql, [id], (error, rows) => {
     // console.log(rows);
     if (error) {
@@ -34,25 +34,34 @@ const getMovieByID = (req, res) => {
 };
 
 //POST
-const addMovie = (req, res) => {
+/* const addMovie = (req, res) => {
   
-  const { titulo, estreno, descripcion, id_categorias } = req.body;
+  const { titulo, estreno, descripcion, director, id_categoria } = req.body;
 
   const sql =
-    "INSERT INTO peliculas (titulo, estreno, descripcion, id_categorias) VALUES (?, ?, ?, ?)";
-  db.query(sql, [titulo, estreno, descripcion, id_categorias], (error, result) => {
-    // console.log(result);
+    "INSERT INTO peliculas (titulo, estreno, descripcion, director, id_categoria) VALUES (?, ?, ?, ?, ?)";
+  db.query(sql, [titulo, estreno, descripcion, director, id_categoria], (error, result) => {
+    
     if (error) {
-      // console.log(error);
+      
       return res.status(500).json({ error: "Intente mas tarde" });
     }
 
     const pelicula = { ...req.body, id: result.insertId };
 
-    // req.body.id = result.insertId;
+    req.body.id = result.insertId;
 
     res.json(pelicula);
   });
+}; */
+
+const addMovie = (req,res) => {
+  const { titulo, estreno, descripcion, director, id_categoria } = req.body
+  const sql = 'INSERT INTO peliculas (titulo, estreno, descripcion, director, id_categoria) VALUES ( ? , ? , ? , ? , ? )'
+  db.query(sql,[titulo, estreno, descripcion, director, id_categoria], (err,result)=>{
+      if (err) throw err
+      res.json({message: 'Movie created', movieID: result.insertId})
+  })
 };
 
 //PUT(reemplazo completamente un recurso existente)

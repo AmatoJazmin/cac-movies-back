@@ -1,0 +1,34 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const config = require('../config/config')
+const db = require('../db/db')
+
+exports.register = (req,res) => {
+    const {email, nombre, apellido, contrasena, fecha_nacimiento, id_pais} = req.body
+    const hashedPassword  = bcrypt.hashSync(contrasena,8)
+    const sql = 'INSERT INTO usuarios (email, nombre, apellido, contrasena, fecha_nacimiento, id_pais) VALUES ( ? , ? , ? , ? , ? , ? )'
+    db.query(sql,[email, nombre, apellido, hashedPassword, fecha_nacimiento, id_pais], (err,result)=>{
+        if (err) {
+            console.log(err)
+            return res.status(500).json({error: "Intente mas tarde"})
+        }
+        const token = jwt.sign({user: email},config.secretKey,{expiresIn:config.tokenExpiresIn})
+        res.status(201).send({auth:true,token})
+    })
+}
+
+exports.login = (req,res) => {
+    const {email, contrasena} = req.body
+    const sql = 'SELECT contrasena FROM usuarios where email = ? '
+    db.query(sql, [email], (err,result)=>{
+        if (err) {
+            console.log(err)
+            return res.status(500).json({error: "Intente mas tarde"})
+        }
+        if(result=='') return res.status(404).send('User not found')
+        const passwordIsValid = bcrypt.compareSync(contrasena,result[0].contrasena)
+        if (!passwordIsValid) return res.status(401).send({auth:false, token:null})
+        const token = jwt.sign({user: email},config.secretKey,{expiresIn: config.tokenExpiresIn})
+        res.status(200).send({auth:true,token})
+    })
+}

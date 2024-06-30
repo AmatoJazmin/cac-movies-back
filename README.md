@@ -18,7 +18,7 @@
   - Ir a 'New' para crear una nueva base de datos
   - Ir a 'import' y seleccionar el script moviesdb.sql ubicado en la carpeta src
 
-#Renombrar archivo de variables de entorno .env-example por .env y completar con datos locales
+#Crear copia del archivo .env-example y nombrarlo .env - Completar con datos de variables de entorno locales 
 
 #Levantar el proyecto
 

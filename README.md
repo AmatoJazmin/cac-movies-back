@@ -16,17 +16,11 @@
 
   - Ingresar a phpMyAdmin con sus credenciales
   - Ir a 'New' para crear una nueva base de datos
-  - Ir a 'import' y seleccionar script moviesdb.sql ubicado en la ruta '..\cac-movies-back\src'
+  - Ir a 'import' y seleccionar el script moviesdb.sql ubicado en la carpeta src
 
-#Verificar credenciales de la base de datos en el archivo db.js
+#Renombrar archivo de variables de entorno .env-example por .env y completar con datos locales
 
-  - user: '',
-    
-  - password: ''
-    
-Deben ser las mismas con las que ingresa a phpMyAdmin
-
-#Levantar el proyecto en local
+#Levantar el proyecto
 
     npm run dev
 

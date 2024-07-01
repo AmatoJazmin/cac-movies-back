@@ -32,3 +32,15 @@ exports.login = (req,res) => {
         res.status(200).send({auth:true,token})
     })
 }
+
+exports.perfil = (req,res) => {
+    const user =  req.user
+    const sql = 'SELECT u.email, u.nombre, u.apellido, u.fecha_nacimiento, p.nombre AS pais FROM usuarios AS u INNER JOIN paises AS p ON u.id_pais = p.id where u.email = ? '
+    db.query(sql,[user],(err,result)=>{
+        if (err) {
+            console.log(err)
+            return res.status(500).json({error: "Intente mas tarde"})
+        }
+        res.json(result)
+    })
+}

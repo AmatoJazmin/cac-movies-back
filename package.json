@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+     "start": "node index.js",
     "dev": "node --watch index.js"
   },
   "repository": {
@@ -22,4 +22,6 @@
     "express": "^4.19.2",
     "mysql2": "^3.10.1"
   }
-}
+   
+  }
+

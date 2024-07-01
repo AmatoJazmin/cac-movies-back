@@ -34,7 +34,7 @@ const getMovieByID = (req, res) => {
 };
 
 //POST
-/* const addMovie = (req, res) => {
+  /* const addMovie = (req, res) => {
   
   const { titulo, estreno, descripcion, director, id_categoria } = req.body;
 
@@ -49,13 +49,11 @@ const getMovieByID = (req, res) => {
 
     const pelicula = { ...req.body, id: result.insertId };
 
-    req.body.id = result.insertId;
-
     res.json(pelicula);
   });
-}; */
+}; */ 
 
-const addMovie = (req,res) => {
+/*  const addMovie = (req,res) => {
   const { titulo, estreno, descripcion, director, id_categoria } = req.body
   const sql = 'INSERT INTO peliculas (titulo, estreno, descripcion, director, id_categoria) VALUES ( ? , ? , ? , ? , ? )'
   db.query(sql,[titulo, estreno, descripcion, director, id_categoria], (err,result)=>{
@@ -99,7 +97,7 @@ const updateMovie = (req, res) => {
     res.json(producto);
   });
 };
-
+ */
 //DELETE
 const deleteMovie = (req, res) => {
   const { id } = req.params;
@@ -123,7 +121,7 @@ const deleteMovie = (req, res) => {
 module.exports = {
   getMovies,
   getMovieByID,
-  addMovie,
-  updateMovie,
+  //addMovie,
+  //updateMovie,
   deleteMovie,
 };

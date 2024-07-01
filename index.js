@@ -1,10 +1,12 @@
 const express = require("express")
 const moviesRoutes = require("./routes/movies.router")
+const authRoutes = require("./routes/auth.router")
 
 const server = express()
 
-const PORT = process.env.PORT || 3000
+server.use(express.json())
+server.use('/auth',authRoutes)
 
-server.get("/", (req,res) => res.send("Hola movies en Alwaysdata!"))
+const PORT = process.env.PORT || 3000
 
 server.listen(PORT, () => console.log(`Servidor funcionando en http://localhost:${PORT}`))

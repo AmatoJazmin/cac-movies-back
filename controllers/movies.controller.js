@@ -35,8 +35,33 @@ const getMovies = (req, res) => {
   //POST
   //Logica para la funcion addMovie
 
+
+  const addMovie = (req, res) => { //declaracion 
+    const sql = "INSERT INTO peliculas (titulo, estreno, descripcion, director, id_categoria) VALUES (?, ?, ?, ?, ?)"; //sentencia SQL
+    const {titulo, estreno, descripcion, director, id_categoria} = req.body; //donde los encuentra en Body. ((req.body.title  req.body.director req.body.year))
+    const values = [titulo, estreno, descripcion, director, id_categoria]; //valores nombres
+    
+    db.query (sql, [titulo, estreno, descripcion, director, id_categoria], (error, result) => { //database query
+    if (error) {
+      return res.status(500).json({ error: "Intente mas tarde" }); //tira error
+      }
+  
+      const pelicula = { ...req.body, id: result.insertId };
+  
+      res.json(pelicula); //resultado
+    });
+  };
+
   //PUT
   //Logica para la funcion updateMovie
+  const updateMovie = (req, res) =>{ 
+
+    const { id } = req.params;  // llama al ID  
+    const sql = "UPDATE peliculas SET titulo = ?, estreno = ?, descripcion = ?, director = ?, id_categoria = ? WHERE id = ?"; //accion
+    const {titulo, estreno, descripcion, director, id_categoria} = req.body; // de donde obtiene el la edicion
+   
+    res.json({id:id, pelicula: req.body }); //resultado
+  };
 
   //DELETE
   const deleteMovie = (req, res) => {
@@ -61,7 +86,7 @@ const getMovies = (req, res) => {
   module.exports = {
     getMovies,
     getMovieByID,
-    //addMovie,
-    //updateMovie,
+    addMovie,
+    updateMovie,
     deleteMovie,
   };

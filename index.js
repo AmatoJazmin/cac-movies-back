@@ -6,6 +6,7 @@ const server = express()
 
 server.use(express.json())
 server.use('/auth',authRoutes)
+server.use('/',moviesRoutes)
 
 const PORT = process.env.PORT || 3000
 

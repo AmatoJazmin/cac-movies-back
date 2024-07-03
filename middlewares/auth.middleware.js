@@ -5,12 +5,12 @@ module.exports = (req,res, next) => {
 
     const authHeader = req.headers['authorization']
 
-    if(!authHeader) return res.status(403).send({auth:false,message:'No se proveyo un token'})
+    if(!authHeader) return res.status(403).send({auth:false,message:'Falta token de autenticacion'})
     const token = authHeader.split(' ')[1]
 
-    if(!token) return res.status(403).send({auth:false,message:'Malformed token'})
+    if(!token) return res.status(403).send({auth:false,message:'Token invalido'})
     jwt.verify(token,config.secretKey,(err,decoded)=>{
-    if (err) return res.status(500).send({auth:false,message:'Failed to authenticate token'})
+    if (err) return res.status(500).send({auth:false,message:'No se pudo autenticar el token'})
         req.user = decoded.user
     next()
     })

@@ -7,7 +7,8 @@ exports.register = (req,res) => {
     const {email, nombre, apellido, contrasena, fecha_nacimiento, id_pais} = req.body
     const hashedPassword  = bcrypt.hashSync(contrasena,8)
     const sql = 'INSERT INTO usuarios (email, nombre, apellido, contrasena, fecha_nacimiento, id_pais) VALUES ( ? , ? , ? , ? , ? , ? )'
-    db.query(sql,[email, nombre, apellido, hashedPassword, fecha_nacimiento, id_pais], (err,result)=>{
+    const values = [email, nombre, apellido, hashedPassword, fecha_nacimiento, id_pais]
+    db.query(sql, values, (err,result)=>{
         if (err) {
             console.log(err)
             return res.status(500).json({error: "Intente mas tarde"})
@@ -16,7 +17,7 @@ exports.register = (req,res) => {
         res.status(201).send({auth:true,token})
     })
 }
-
+    
 exports.login = (req,res) => {
     const {email, contrasena} = req.body
     const sql = 'SELECT contrasena FROM usuarios where email = ? '
@@ -25,7 +26,7 @@ exports.login = (req,res) => {
             console.log(err)
             return res.status(500).json({error: "Intente mas tarde"})
         }
-        if(result=='') return res.status(404).send('User not found')
+        if(result=='') return res.status(404).send(`El email ${email} no se encuentra registrado`)
         const passwordIsValid = bcrypt.compareSync(contrasena,result[0].contrasena)
         if (!passwordIsValid) return res.status(401).send({auth:false, token:null})
         const token = jwt.sign({user: email},config.secretKey,{expiresIn: config.tokenExpiresIn})

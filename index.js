@@ -5,7 +5,9 @@ const authRoutes = require("./routes/auth.router")
 const server = express()
 
 server.use(express.json())
+server.use("/", require("./routes/movies.router"));
 server.use('/auth',authRoutes)
+server.use('/',moviesRoutes)
 
 const PORT = process.env.PORT || 3000
 
